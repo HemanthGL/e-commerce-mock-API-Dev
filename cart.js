@@ -120,6 +120,7 @@ function decQuant(id) {
             localStorage.setItem('cart', stringify);
         }
         window.location.reload();
+        updateCartTotal();
         return;
     }
     console.log('after reload');
@@ -137,6 +138,7 @@ function decQuant(id) {
         var stringify = JSON.stringify(resp);
         localStorage.setItem('cart', stringify);
     }
+    updateCartTotal();
 }
 function cartItem(item) {
     return __awaiter(this, void 0, void 0, function () {
@@ -146,11 +148,23 @@ function cartItem(item) {
                 case 0: return [4 /*yield*/, fetchCartData(parseInt(item.id))];
                 case 1:
                     prod = _a.sent();
-                    tbRow = "\n        <tr id = '".concat(prod.id, "-prod'>\n            <th scope=\"row\" class = 'text-center'>").concat(prod.id, "</th>\n            <td class = 'text-center'>\n                <img src=\"").concat(prod.image, "\" style='width: 60px; height: 60px'/>\n            </td>\n            <td class='text-center'>").concat(prod.title, "</td>\n            <td>\n                <div class='d-flex container-fluid justify-content-evenly'>\n                    <button class='btn btn-primary' id=\"").concat(item.id, "-inc-btn\" onclick= \"incQuant(").concat(item.id, ")\" type = 'button'>+</button>\n                    <p id=\"").concat(item.id, "-quant\" class='inline'> ").concat(item.quant, " </p>\n                    <button class='btn btn-warning' id = \"").concat(item.id, "-dec-btn\" onclick= \"decQuant(").concat(item.id, ")\" = 'button'>-</button>\n                </div>\n            </td>\n            <td id = '").concat(prod.id, "-each'>").concat(prod.price, "</td>\n            <td id=\"").concat(prod.id, "-total\">").concat(prod.price * item.quant, "</td>\n        </tr>\n    ");
+                    tbRow = "\n        <tr id = '".concat(prod.id, "-prod'>\n            <th scope=\"row\" class = 'text-center'>").concat(prod.id, "</th>\n            <td class = 'text-center'>\n                <img src=\"").concat(prod.image, "\" style='width: 60px; height: 60px'/>\n            </td>\n            <td class='text-center'>").concat(prod.title, "</td>\n            <td>\n                <div class='d-flex container-fluid justify-content-evenly'>\n                    <button class='btn btn-primary' id=\"").concat(item.id, "-inc-btn\" onclick= \"incQuant(").concat(item.id, ")\" type = 'button'>+</button>\n                    <p id=\"").concat(item.id, "-quant\" class='inline'> ").concat(item.quant, " </p>\n                    <button class='btn btn-warning' id = \"").concat(item.id, "-dec-btn\" onclick= \"decQuant(").concat(item.id, ")\" = 'button'>-</button>\n                </div>\n            </td>\n            <td id = '").concat(prod.id, "-each'>").concat(prod.price, "</td>\n            <td id=\"").concat(prod.id, "-total\" class=\"prod-total\">").concat(prod.price * item.quant, "</td>\n        </tr>\n    ");
                     return [2 /*return*/, tbRow];
             }
         });
     });
+}
+function updateCartTotal() {
+    var _a;
+    var collection = document.getElementsByClassName('prod-total');
+    var total = 0;
+    if (collection.length != 0) {
+        for (var _i = 0, collection_1 = collection; _i < collection_1.length; _i++) {
+            var ele = collection_1[_i];
+            total += parseInt(ele.textContent);
+        }
+    }
+    (_a = document.getElementById('cart-total')) === null || _a === void 0 ? void 0 : _a.textContent = total.toString();
 }
 function renderCart(tBody) {
     return __awaiter(this, void 0, void 0, function () {
@@ -182,7 +196,9 @@ function renderCart(tBody) {
                 case 3:
                     _i++;
                     return [3 /*break*/, 1];
-                case 4: return [2 /*return*/];
+                case 4:
+                    updateCartTotal();
+                    return [2 /*return*/];
             }
         });
     });

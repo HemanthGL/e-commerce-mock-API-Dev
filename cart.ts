@@ -113,6 +113,7 @@ function decQuant(id: number){
         }
         
         window.location.reload();
+        updateCartTotal();
         return;
     }
 
@@ -132,6 +133,7 @@ function decQuant(id: number){
         localStorage.setItem('cart', stringify)
 
     }
+    updateCartTotal();
 
 }
 
@@ -156,12 +158,25 @@ async function cartItem(item: StoredProd){
                 </div>
             </td>
             <td id = '${prod.id}-each'>${prod.price}</td>
-            <td id="${prod.id}-total">${prod.price * item.quant}</td>
+            <td id="${prod.id}-total" class="prod-total">${prod.price * item.quant}</td>
         </tr>
     `
     
     return tbRow;
 
+}
+
+function updateCartTotal(){
+    let collection = document.getElementsByClassName('prod-total')
+
+    let total = 0
+
+    if (collection.length != 0){
+        for (let ele of collection){
+            total += parseInt(ele.textContent)
+        }
+    }
+    document.getElementById('cart-total')?.textContent = total.toString();
 }
 
 async function renderCart(tBody: HTMLElement):Promise<void>{
@@ -195,4 +210,5 @@ async function renderCart(tBody: HTMLElement):Promise<void>{
         // tBody.innerHTML += addRow;
     }
 
+    updateCartTotal();
 }
