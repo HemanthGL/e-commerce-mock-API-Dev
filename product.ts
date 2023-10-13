@@ -42,73 +42,109 @@ fetchDataProd(id)
 
 // rewrite this for specific product page layouts
 function makeCarousel(categClass: string, targetEle: HTMLElement, arrProd: Array<Prod>){
-    arrProd.forEach((ele: Prod) => {
-        // container for card deets
-        let new_anch = document.createElement('a')
-        new_anch.href = `./product.html?id=${ele.id}`
-        let new_div = document.createElement('div')
-        new_div.setAttribute('class', 'card')
-        new_div.setAttribute('class', `${categClass}-product-in-carousel`)
-        new_div.setAttribute('class', `prod-id-${ele.id}`)  // to access id: HTMLElement.attributes [ check whether this gives array, or what ]
-        new_div.style.width = '18rem'
-        new_div.style.border = '5px solid black'
-        new_div.style.display = 'flex'
-        new_div.style.flexDirection = 'column'
-        new_div.style.justifyContent = 'center'
-        new_div.style.alignContent = 'center'
 
-        new_anch.appendChild(new_div)
+    let element = document.getElementById('product-carousel')
+    console.log('array element')
+    console.log(arrProd[0])
+    let str =  `
+        <div class='display-6'>${arrProd[0].title}</div>
 
-        // CARD BODY
-        let body = document.createElement('div')
-        body.setAttribute('class', 'card-body')
-        // body.style.maxWidth = '8vw'
-        body.style.display = 'flex'
-        body.style.flexDirection = 'column'
-        body.style.justifyContent = 'center'
-        body.style.alignContent = 'center'
-        body.setAttribute('class', 'text-center')
-        body.style.border = '2px solid brown'
+        <div class = 'd-flex justify-content-evenly'>
+            <div class = 'w-50'>
+                <img src='${arrProd[0].image}>
+            </div>
+
+            <div class = 'text-center'>
+                <div class='lead mt-2 mb-2'>
+                    ${arrProd[0].categ}
+                </div>
+                <div class='display-1 mb-2'>
+                    ${arrProd[0].description}
+                </div>
+                <div class="display-2">
+                    Price: ${arrProd[0].price}
+                </div>
+
+                <div class='display-3'>
+                    Ratings: ${arrProd[0].rating.rate} [${arrProd[0].rating.count}]
+                </div>
+            </div>
+        </div>
+
+    `
+    console.log(element)
+    element!.innerHTML = str;
+
+
+
+
+    // arrProd.forEach((ele: Prod) => {
+    //     // container for card deets
+    //     let new_anch = document.createElement('a')
+    //     new_anch.href = `./product.html?id=${ele.id}`
+    //     let new_div = document.createElement('div')
+    //     new_div.setAttribute('class', 'card')
+    //     new_div.setAttribute('class', `${categClass}-product-in-carousel`)
+    //     new_div.setAttribute('class', `prod-id-${ele.id}`)  // to access id: HTMLElement.attributes [ check whether this gives array, or what ]
+    //     new_div.style.width = '18rem'
+    //     new_div.style.border = '5px solid black'
+    //     new_div.style.display = 'flex'
+    //     new_div.style.flexDirection = 'column'
+    //     new_div.style.justifyContent = 'center'
+    //     new_div.style.alignContent = 'center'
+
+    //     new_anch.appendChild(new_div)
+
+    //     // CARD BODY
+    //     let body = document.createElement('div')
+    //     body.setAttribute('class', 'card-body')
+    //     // body.style.maxWidth = '8vw'
+    //     body.style.display = 'flex'
+    //     body.style.flexDirection = 'column'
+    //     body.style.justifyContent = 'center'
+    //     body.style.alignContent = 'center'
+    //     body.setAttribute('class', 'text-center')
+    //     body.style.border = '2px solid brown'
         
 
-        // PRODUCT TITLE
-        let title = document.createElement('div')
-        title.setAttribute('class', 'product-title')
-        title.setAttribute('class', 'card-title')
-        title.textContent = ele.title
+    //     // PRODUCT TITLE
+    //     let title = document.createElement('div')
+    //     title.setAttribute('class', 'product-title')
+    //     title.setAttribute('class', 'card-title')
+    //     title.textContent = ele.title
 
-        // PRODUCT IMAGE
-        let img_div = document.createElement('div')
-        img_div.setAttribute('class', 'product_img_encl')
-        img_div.setAttribute('class', 'card-img-top')
-        let img_tag = document.createElement('img')
-        img_tag.src = ele.image
-        img_tag.style.height = '8vh';
+    //     // PRODUCT IMAGE
+    //     let img_div = document.createElement('div')
+    //     img_div.setAttribute('class', 'product_img_encl')
+    //     img_div.setAttribute('class', 'card-img-top')
+    //     let img_tag = document.createElement('img')
+    //     img_tag.src = ele.image
+    //     img_tag.style.height = '8vh';
 
-        img_div.appendChild(img_tag)
-        img_div.style.display = 'flex'
-        img_div.style.justifyContent = 'center'
+    //     img_div.appendChild(img_tag)
+    //     img_div.style.display = 'flex'
+    //     img_div.style.justifyContent = 'center'
 
-        // PRODUCT PRICE
-        let price = document.createElement('div')
-        price.setAttribute('class', 'product-price')
-        price.setAttribute('class', 'card-text')
-        price.textContent = ele.price.toString();
+    //     // PRODUCT PRICE
+    //     let price = document.createElement('div')
+    //     price.setAttribute('class', 'product-price')
+    //     price.setAttribute('class', 'card-text')
+    //     price.textContent = ele.price.toString();
 
-        // PRODUCT RATING & COUNT
-        let rating = document.createElement('div')
-        rating.setAttribute('class', 'product-rating')
-        rating.setAttribute('class', 'card-text')
-        rating.textContent = `${ele.rating.rate} Stars [${ele.rating.count}]`
+    //     // PRODUCT RATING & COUNT
+    //     let rating = document.createElement('div')
+    //     rating.setAttribute('class', 'product-rating')
+    //     rating.setAttribute('class', 'card-text')
+    //     rating.textContent = `${ele.rating.rate} Stars [${ele.rating.count}]`
 
-        // All into main div
-        body.appendChild(title)
-        new_div.appendChild(img_div)
-        body.appendChild(price)
-        body.appendChild(rating)
-        new_div.appendChild(body)
+    //     // All into main div
+    //     body.appendChild(title)
+    //     new_div.appendChild(img_div)
+    //     body.appendChild(price)
+    //     body.appendChild(rating)
+    //     new_div.appendChild(body)
 
-        targetEle.appendChild(new_anch)
-    });
+    //     targetEle.appendChild(new_anch)
+    // });
 
 }
